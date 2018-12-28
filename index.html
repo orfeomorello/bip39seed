@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bip39seed - Store and Hide your 24 words seed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+     <meta name="description" content="Bip39seed is an open source backup tool to store wallet recovery seed phrases. The sequence of words is required to recover private crypto keys if your software or hardware wallet is lost or stolen.">
+  
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Bip39seed - Store and Hide your 24 words seed">
+    <meta itemprop="description" content="Bip39seed is an open source backup tool to store wallet recovery seed phrases. The sequence of words is required to recover private crypto keys if your software or hardware wallet is lost or stolen">
+    <meta itemprop="image" content="https://www.bip39seed.com/img/Binary-Man-Head-Big.jpg">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:site_name" content="Cronhub">
+    <meta property="og:url" content="https://www.bip39seed.com">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bip39seed - Store and Hide your 24 words seed">
+    <meta property="og:description" content="Bip39seed is an open source backup tool to store wallet recovery seed phrases. The sequence of words is required to recover private crypto keys if your software or hardware wallet is lost or stolen">
+    <meta property="og:image" content="https://www.bip39seed.com/img/Binary-Man-Head-Big.jpg">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="cronhub.io">
+    <meta name="twitter:creator" content="@orfeomorello">
+    <meta name="twitter:title" content="Bip39seed - Store and Hide your 24 words seed">
+    <meta name="twitter:description" content="Bip39seed is an open source backup tool to store wallet recovery seed phrases. The sequence of words is required to recover private crypto keys if your software or hardware wallet is lost or stolen">
+    <meta name="twitter:image" content="https://www.bip39seed.com/img/Binary-Man-Head-Big.jpg">
+
+    <link rel="stylesheet" href="css/buefy.min.css">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="css/patternlock.min.css">
+    <link rel="stylesheet" href="css/vue-swatches.min.css">
+   
+    <!-- Compression module -->
+    <script src="js/LZMA/lzma_worker-min.js"></script> 
+    <!-- END Compression module -->
+    <!-- Cryptography module -->
+    <script src="js/crypto-js/aes.js"></script>
+    <!-- END Cryptography module -->
+    <!-- patternLock module -->
+    <script src="js/patternlock/patternlock.min.js"></script>
+    <!-- END patternLock module -->
+    <script src="js/main.js"></script>
+    <style>
+     .white-label{color: white!important;}
+    </style>
+</head>
+<body>
+      <nav class="navbar is-transparent">
+		<div class="container">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="/">
+					<img src="img/Binary-Man-Head.png" height="48">
+					</a>
+				</div>
+				<div class="navbar-menu" id="navMenu">
+					<div class="navbar-end">
+						<div class="navbar-item">
+							<p class="control">
+								<a class="button is-primary is-outlined is-rounded" href="#">
+									<span>GitHub</span>
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		
+		<div id="app">
+		
+		<section class="hero is-white has-text-centered">
+			<div class="hero-body">
+				<div class="container">
+					<div class="columns is-centered">
+						<div class="column">
+							<h1 id="backuptitle" class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile">Backup your recovery wallet seed phrase</h1>
+							<h1 id="restoretitle" class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile" style="diplay:none">Restore your recovery wallet seed phrase</h1>
+							<h2 class="subtitle is-size-4-desktop">Seed phrase is a list of words which store all the information needed to recover a cryptocurrency wallet</h2>
+							
+							<br>
+							
+							<b-collapse :open="false">
+								<button id="tellmemore" class="button is-primary" slot="trigger">Tell me more</button>
+								<br>
+								<div class="notification">
+									<div class="content has-text-left">
+									    <h3>How does it work?</h3>
+										<p>
+											No password can be considered secure anymore, the best way to store secrets is not to store secrets all in the same place. What you can do is to break the secret phrase in few words and obfuscate them by using this website. The result will be a generated url, store or share this url. When you need to recover the words, visit that url and you will need to remember only a pattern and a color to recover the seed phrase. The phrase is not stored anywhere but it is obfuscated within the generated url. 
+										</p>
+									</div>
+								</div>
+							</b-collapse>
+                              
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section id="breaksecretphrase" class="hero is-primary is-bold">
+		 <div class="hero-body">
+		  <div class="container">
+			<div class="columns">
+				<div class="column is-5 is-offset-1  has-text-centered">
+					<img src="img/BinaryWhirlpoolWhite.png" style="width:60%">
+				</div>
+				<div class="column is-5">
+					<p style="font-size: 28px;line-height: 34px;color: #b7adf5;font-weight: 700;">
+								Break your secret phrase in half or select a few words in the right order
+					</p>
+					<br>
+					<p>
+								  <b-field label="Mnemonic language" custom-class="white-label">
+										<b-select id="lang" v-model="selectedLang" placeholder="Choose language wordlist" icon='earth' size="is-medium" required>
+										<option v-for="option in language" :value="option.id" :key="option.id"> {{ option.text }} </option>
+										</b-select>
+								   </b-field>
+								   <br>
+								   <b-field label="Enter all or some words of your seed phrase" custom-class="white-label">
+										<b-taginput
+											v-model="wordlist.tags"
+											:data="wordlist.filteredTags"
+											:allow-new="false"
+											autocomplete="off"
+											field="text"
+											icon="label"
+											placeholder="Add a word seed"
+											@typing="getFilteredTags">
+											<template slot="empty">
+												There is no such word
+											</template>
+										</b-taginput>
+									</b-field>
+							</p>
+				</div>
+			</div>
+		  </div>
+		</div>
+      </section>
+      
+		<section class="section">
+			<div class="container is-narrow">
+				<div class="box">
+				        
+						<div class="has-text-centered" style="padding-bottom:50px">
+							<h1 class="title is-size-4 is-spaced"> <img src="img/Pencil-stylized-blue.png" style="width:35px"> Pattern + <img src="img/Paint-blue.png" style="width:35px"> Color </h1> 
+						</div>
+				         
+				        <div class="columns">
+								<div class="column">
+									
+										<h1 class="title is-size-4 is-spaced"> Please draw a secret graphical pattern </h1> 
+										<p>Pattern lock prevents unwanted access to your seed phrase.</p>
+										<br>
+										  
+										 <div id="patternContainer">
+										  </div>
+									      <br>
+										   <button class="button" onclick="editLock()">
+												<span>Edit the pattern</span>
+										   </button>
+								 </div>
+								 
+								 <div class="column">
+										
+											<h1 class="title is-size-4 is-spaced"> Please choose a color </h1>
+											<p>Remember a color is much easier to remember a password.</p>
+											<br>
+											
+											 <swatches v-model="color" inline></swatches>
+											
+								 </div>
+						</div>
+						<!-- columns -->					
+				</div>
+				<!-- box -->
+			</div>
+			<!-- container -->
+	</section>
+	
+	</div>
+				
+	<section class="section" id="create-message">
+    <div class="container has-text-centered">
+        <div >
+           <button type="button" class="button is-large is-primary" onclick="createHash()">Backup my seed phrase</button>
+        </div>
+    </div>
+    </section>
+    
+    <section class="section" id="show-message">
+    <div class="container has-text-centered">
+		<div>
+			<button type="button" class="button is-large is-primary" onclick="decodeHash()">Restore my seed phrase</button>
+		</div>
+		<br>
+		<p> OR </p>
+		<br>
+		<div>
+			<button type="button" class="button is-large is-primary" onclick="document.location.href='/'">Create a new Backup</button>
+		</div>
+     </div>
+    </section>
+    
+    <div id="modalresult" class="modal">
+	  <div class="modal-background"></div>
+	  <div class="modal-content">
+	    <div class="box">
+		  <h5 class="title is-5">The recovered mnemonic phrase</h5>
+		  <div id="message-content">
+		  </div>
+		</div>
+	  </div>
+	  <button class="modal-close is-large" aria-label="close" onclick="document.getElementById('modalresult').classList.remove('is-active');"></button>
+   </div>
+    
+    <footer class="footer">
+	
+		<div class="content has-text-centered">
+			<p> <strong>Bip39seed</strong> by <a href="https://twitter.com/orfeomorello" target="_blank">Orfeo Morello</a> </p>
+			<p>
+			        <span style="font-size:13px">
+                        &lt;Made with
+                        
+                        <img style="width:10px;" src="img/red-heart.png" title="Heart">
+						
+                         in Calabria /&gt;
+                         
+                        </span> 
+             </p>
+             
+             <p>
+                        The source code is licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>. 
+                    
+					</p>
+		</div>
+	
+</footer>
+ 
+    <script src="js/vue/vue.min.js"></script>
+    <!-- Individual components -->
+    <script src="js/vue/vue-resource.min.js"></script>
+    <script src="js/vue/vue-swatches.min.js"></script>
+    <!-- Full bundle -->
+    <script src="js/buefy/buefy.min.js"></script>
+  
+    <script>
+    var lock;
+    const dataLang = [{"id":"english","text":"English"},{"id":"spanish","text":"Spanish"},{"id":"french","text":"French"},{"id":"italian","text":"Italian"},{"id":"japan","text":"Japanese"},{"id":"korean","text":"Korean"},{"id":"chinese_simplified","text":"Chinese simplified"},{"id":"chinese_traditional","text":"Chinese traditional"}];
+    var dataWords = [];
+    const Swatches = window.VueSwatches.default;
+   
+    const thispage = {
+       components: { Swatches },  	
+       data () {
+		  return {
+		  	thepattern: '',
+		  	color: '#1CA085',
+		  	language: dataLang,
+			wordlist: {
+                filteredTags: dataWords,
+                isSelectOnly: false,
+                tags: [],
+                allowNew: false
+            }
+		  }
+      },
+      mounted () {
+        lock = new PatternLock("#patternContainer",{matrix:[4,3], 
+            mapper: function(idx){
+			return (idx%9) + 1;
+		    }, 
+		    onDraw:function(pattern){		    	
+		    	app.$data.thepattern = pattern;
+		    	lock.disable();
+		    }
+		});
+      },
+      computed: {
+		  selectedLang: {
+			get () {
+			  return null;
+			},
+			set (optionValue) {
+			  this.refreshWords(optionValue);
+			},
+		  }
+      },
+        methods: {
+        	refreshWords(resource) {
+        		  var urifile  = 'bip-0039/'+resource+'.json';
+				  this.$http.get(urifile).then( function (response) {
+					dataWords = response.data;
+					this.wordlist.filteredTags = dataWords;
+				  }, function(error){
+						console.log(error.statusText);
+				  });
+            },
+            getFilteredTags(text) {
+            	this.wordlist.filteredTags = dataWords.filter((option) => {
+                    return option.toString()
+                        .toLowerCase()
+                        .indexOf(text.toLowerCase()) >= 0
+                })
+            }
+        }
+    }
+    
+    const app = new Vue(thispage);
+    app.$mount('#app');
+    
+    function editLock()
+    {
+    	app.$data.thepattern = '';
+		lock.enable();
+    }
+    </script>
+</body>
+</html>
