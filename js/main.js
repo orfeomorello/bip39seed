@@ -84,7 +84,7 @@ function decodeHash() {
         document.getElementById("modalresult").classList.add('is-active');
         
     } catch(e) {
-        document.getElementById('message-content').innerHTML = 'Error: Unable to decrypt - ' + e.message;
+        document.getElementById('message-content').innerHTML = 'Graphical pattern and color combination are wrong!';// + e.message;
         
         document.getElementById("modalresult").classList.add('is-active');
         
