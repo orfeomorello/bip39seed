@@ -52,11 +52,12 @@ function createHash() {
         // compress and encrypt
         let ciphertext = cipher.encrypt(compress(rawMessage), passphrase);
         // Set query string parameter containing crypto algo
-        window.history.replaceState(null, '', '?' + new Date().getTime());
+        window.history.replaceState(null, '', '?' +  shortid());
         // Append message to URL fragment
         window.location.hash = ciphertext.toString()
-        
-        copyURL()
+        // Copy into clipboard
+        Clipboard.copy(location.href);
+       
         app.$toast.open({
                     message: 'Success. The URL is copied to clipboard.',
                     type: 'is-success',
@@ -134,14 +135,4 @@ function getCipher(algo) {
         default:
             throw new Error('Unable to set cipher: ' + algo + ' is not valid')
     }
-}
-
-function copyURL() {
-    let text = location.href
-    let dummy = document.createElement("input")
-    document.body.appendChild(dummy)
-    dummy.value = text
-    dummy.select()
-    document.execCommand("copy")
-    document.body.removeChild(dummy)
 }

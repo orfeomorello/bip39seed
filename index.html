@@ -8,7 +8,7 @@
     
      <meta name="description" content="Bip39seed is an open source backup tool to store wallet recovery seed phrases. The sequence of words is required to recover private crypto keys if your software or hardware wallet is lost or stolen.">
   
-    <!-- Google / Search Engine Tags -->
+      <!-- Google / Search Engine Tags -->
     <meta itemprop="name" content="Bip39seed - Store and Hide your 24 words seed">
     <meta itemprop="description" content="An open source backup tool to store wallet recovery seed phrases. The sequence of words is required to recover private crypto keys if your software or hardware wallet is lost or stolen">
     <meta itemprop="image" content="https://www.bip39seed.com/img/bip-39-word-cloud.png">
@@ -36,13 +36,15 @@
    
     <!-- Compression module -->
     <script src="js/LZMA/lzma_worker-min.js"></script> 
-    <!-- END Compression module -->
     <!-- Cryptography module -->
     <script src="js/crypto-js/aes.js"></script>
-    <!-- END Cryptography module -->
-    <!-- patternLock module -->
+    <!-- PatternLock module -->
     <script src="js/patternlock/patternlock.min.js"></script>
-    <!-- END patternLock module -->
+     <!-- Clipboard -->
+    <script src="js/clipboard/clipboard.js"></script>
+    <!-- NanoId a tiny, secure, URL-friendly, unique string ID generator for JavaScript https://github.com/ai/nanoid/ -->
+    <script src="js/nanoid/nanoid-bundle.js"></script>
+    <!-- Main -->
     <script src="js/main.js"></script>
     <style>
      .white-label{color: white!important;}
@@ -60,7 +62,7 @@
 					<div class="navbar-end">
 						<div class="navbar-item">
 							<p class="control">
-								<a class="button is-primary is-outlined is-rounded" href="https://github.com/orfeomorello/bip39seed/" target="_blank">
+								<a class="button is-primary is-outlined is-rounded" href="#">
 									<span>GitHub</span>
 								</a>
 							</p>
@@ -77,10 +79,16 @@
 				<div class="container">
 					<div class="columns is-centered">
 						<div class="column">
-							<h1 id="backuptitle" class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile">Backup your recovery wallet seed phrase</h1>
-							<h1 id="restoretitle" class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile" style="diplay:none">Restore your recovery wallet seed phrase</h1>
-							<h2 class="subtitle is-size-4-desktop">Seed phrase is a list of words which store all the information needed to recover a cryptocurrency wallet</h2>
 							
+						<span id="backuptitle">
+						    <h1 class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile">Backup your recovery wallet seed phrase</h1>
+							<h2 class="subtitle is-size-4-desktop">Seed phrase is a list of words which store all the information needed to recover a cryptocurrency wallet</h2>
+						</span>
+						<span id="restoretitle" style="diplay:none;">
+							<b-icon icon="account" size="is-large"> </b-icon>
+                            <h1 class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile" style="text-decoration: underline;"> This page content is protected!</h1>
+							<h2 class="subtitle is-size-4-desktop">If you would like to view the contents of this page, you will need to provide a graphical pattern and a color.</h2>
+						</span>
 							<br>
 							
 							<b-collapse :open="false">
@@ -116,7 +124,7 @@
 					<br>
 					<p>
 								  <b-field label="Mnemonic language" custom-class="white-label">
-										<b-select id="lang" v-model="selectedLang" placeholder="Choose language wordlist" icon='earth' size="is-medium" required>
+										<b-select id="lang" v-model="selectedLang" placeholder="Choose wordlist" icon='earth' size="is-medium" required>
 										<option v-for="option in language" :value="option.id" :key="option.id"> {{ option.text }} </option>
 										</b-select>
 								   </b-field>
@@ -237,9 +245,9 @@
              <p>
                         The source code is licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>. 
                     
-			 </p>
-			 
-			 <div style="font-size: 11px">
+		    </p>
+		    
+		    <div style="font-size: 11px">
 				<p>I made this little tool for free, but you can still make a donation if you want to show your support :)</p>
 				<br>
 				<p>
@@ -250,7 +258,6 @@
 			<p>
 			<img src="img/17SuyPXGkCUkT2tN6sVAJRGv3cemRmGB6L.png" style="width:200px">
 			</p>
-			
 		</div>
 	
 </footer>
