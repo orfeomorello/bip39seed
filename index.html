@@ -322,6 +322,7 @@
       },
       mounted () {
         lock = new PatternLock("#patternContainer",{matrix:[4,3], 
+            margin: 15,
             mapper: function(idx){
 			return (idx%9) + 1;
 		    }, 
