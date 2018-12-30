@@ -3,24 +3,56 @@ let algo = 'aes' // possible string value: aes, des, rab, rc4
 // Event listener below is used instead of onload
 document.addEventListener("DOMContentLoaded", function(event) {
 		
+       // 1st, we set the correct status when the page loads
+	  navigator.onLine ? connectionStatus(true) : connectionStatus(false);
+	
+	  // now we listen for network status changes
+	  window.addEventListener('online', () => {
+		connectionStatus(true);
+	  });
+	
+	  window.addEventListener('offline', () => {
+		connectionStatus(false);
+	  });
+	  
     determineOperation()
+	  
 })
+
+function connectionStatus(online)
+{
+	if(online)
+	{
+		document.getElementById('online').style.display = 'inline';
+		document.getElementById('offline').style.display = 'none';
+	}
+	else
+	{
+		document.getElementById('offline').style.display = 'inline';
+		document.getElementById('online').style.display = 'none';
+	}
+}
 
 function determineOperation() {
     if (!document.location.hash) {
         // show creation form
-        document.getElementById('show-message').style.display = 'none';
-        document.getElementById('create-message').style.display = 'inline';
+      
         document.getElementById('backuptitle').style.display = 'inline';
         document.getElementById('restoretitle').style.display = 'none';
+ 
+        //backup - restore buttons
+        document.getElementById('show-message').style.display = 'none';
+        document.getElementById('create-message').style.display = 'inline';
     } else {
-        // try to decode the message in URL fragment
-        document.getElementById('show-message').style.display = 'inherit';
+        document.getElementById('backuptitle').style.display = 'none';
+        document.getElementById('restoretitle').style.display = 'inline';
+        
+        //backup - restore buttons
+        document.getElementById('show-message').style.display = 'inline';
         document.getElementById('create-message').style.display = 'none';
+        
         document.getElementById('breaksecretphrase').style.display = 'none';
         document.getElementById('tellmemore').style.display = 'none';
-        document.getElementById('backuptitle').style.display = 'none';
-        document.getElementById('restoretitle').style.display = 'inherit';
     }
 }
 

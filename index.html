@@ -74,6 +74,8 @@
 		
 		<div id="app">
 		
+		<!-- app start -->
+		
 		<section class="hero is-white has-text-centered">
 			<div class="hero-body">
 				<div class="container">
@@ -110,106 +112,138 @@
 			</div>
 		</section>
 		
-		<section id="breaksecretphrase" class="hero is-primary is-bold">
-		 <div class="hero-body">
-		  <div class="container">
-			<div class="columns">
-				<div class="column is-5 is-offset-1  has-text-centered">
-					<img src="img/BinaryWhirlpoolWhite.png" style="width:60%">
+		
+		
+		
+	<!-- connectivity status of the device changes -->
+    <div id="connectivity">
+    
+		 <!-- Only renders when the device is online -->
+		<div id="online" style="display:none">
+		  <section class="section">
+				<div class="container">
+					<div class="box">
+					  <div class="columns">
+						<div class="column has-text-centered">
+						   <p><span class="icon has-text-success"><i class="mdi mdi-32px mdi-wifi"></i></span> Please <b><u>disable</u></b> your connection or Wi-Fi now! For security reasons this app not require to be connected to the Internet.</p>
+      					   <br>
+						   <p><a class="button is-primary is-outlined is-rounded" onclick="connectionStatus(false); return false;"> <span class="icon is-small"><i class="mdi mdi-lan-disconnect"></i></span> &nbsp;  I disabled my connection</a></p>
+						  </div>
+					  </div>
+					</div>
 				</div>
-				<div class="column is-5">
-					<p style="font-size: 28px;line-height: 34px;color: #b7adf5;font-weight: 700;">
-								Break your secret phrase in half or select a few words in the right order
-					</p>
-					<br>
-					<p>
-								  <b-field label="Mnemonic language" custom-class="white-label">
-										<b-select id="lang" v-model="selectedLang" placeholder="Choose wordlist" icon='earth' size="is-medium" required>
-										<option v-for="option in language" :value="option.id" :key="option.id"> {{ option.text }} </option>
-										</b-select>
-								   </b-field>
-								   <br>
-								   <b-field label="Enter all or some words of your seed phrase" custom-class="white-label">
-										<b-taginput
-											v-model="wordlist.tags"
-											:data="wordlist.filteredTags"
-											:allow-new="false"
-											autocomplete="off"
-											field="text"
-											icon="label"
-											placeholder="Add a word seed"
-											@typing="getFilteredTags">
-											<template slot="empty">
-												There is no such word
-											</template>
-										</b-taginput>
-									</b-field>
-							</p>
-				</div>
-			</div>
-		  </div>
+			</section>	
 		</div>
-      </section>
-      
-		<section class="section">
-			<div class="container is-narrow">
-				<div class="box">
-				        
-						<div class="has-text-centered" style="padding-bottom:50px">
-							<h1 class="title is-size-4 is-spaced"> <img src="img/Pencil-stylized-blue.png" style="width:35px"> Pattern + <img src="img/Paint-blue.png" style="width:35px"> Color </h1> 
-						</div>
-				         
-				        <div class="columns">
-								<div class="column">
-									
-										<h1 class="title is-size-4 is-spaced"> Please draw a secret graphical pattern </h1> 
-										<p>Pattern lock prevents unwanted access to your seed phrase.</p>
-										<br>
-										  
-										 <div id="patternContainer">
-										  </div>
-									      <br>
-										   <button class="button" onclick="editLock()">
-												<span>Edit the pattern</span>
-										   </button>
-								 </div>
-								 
-								 <div class="column">
-										
-											<h1 class="title is-size-4 is-spaced"> Please choose a color </h1>
-											<p>Remember a color is much easier to remember a password.</p>
-											<br>
-											
-											 <swatches v-model="color" inline></swatches>
-											
-								 </div>
-						</div>
-						<!-- columns -->					
+		
+		<!-- Only renders when the device is offline -->
+		<div id="offline" style="display:none">
+			
+			<section id="breaksecretphrase" class="hero is-primary is-bold">
+			 <div class="hero-body">
+			  <div class="container">
+				<div class="columns">
+					<div class="column is-5 is-offset-1  has-text-centered">
+						<img src="img/BinaryWhirlpoolWhite.png" style="width:60%">
+					</div>
+					<div class="column is-5">
+						<p style="font-size: 28px;line-height: 34px;color: #b7adf5;font-weight: 700;">
+									Break your secret phrase in half or select a few words in the right order
+						</p>
+						<br>
+						<p>
+									  <b-field label="Mnemonic language" custom-class="white-label">
+											<b-select id="lang" v-model="selectedLang" placeholder="Choose wordlist" icon='earth' size="is-medium" required>
+											<option v-for="option in language" :value="option.id" :key="option.id"> {{ option.text }} </option>
+											</b-select>
+									   </b-field>
+									   <br>
+									   <b-field label="Enter all or some words of your seed phrase" custom-class="white-label">
+											<b-taginput
+												v-model="wordlist.tags"
+												:data="wordlist.filteredTags"
+												:allow-new="false"
+												autocomplete="off"
+												field="text"
+												icon="label"
+												placeholder="Add a word seed"
+												@typing="getFilteredTags">
+												<template slot="empty">
+													There is no such word
+												</template>
+											</b-taginput>
+										</b-field>
+								</p>
+					</div>
 				</div>
-				<!-- box -->
+			  </div>
 			</div>
-			<!-- container -->
-	</section>
-	
+		  </section>
+		  
+			<section class="section">
+				<div class="container is-narrow">
+					<div class="box">
+							
+							<div class="has-text-centered" style="padding-bottom:50px">
+								<h1 class="title is-size-4 is-spaced"> <img src="img/Pencil-stylized-blue.png" style="width:35px"> Pattern + <img src="img/Paint-blue.png" style="width:35px"> Color </h1> 
+							</div>
+							 
+							<div class="columns">
+									<div class="column">
+										
+											<h1 class="title is-size-4 is-spaced"> Please draw a secret graphical pattern </h1> 
+											<p>Pattern lock prevents unwanted access to your seed phrase.</p>
+											<br>
+											  
+											 <div id="patternContainer">
+											  </div>
+											  <br>
+											   <button class="button" onclick="editLock()">
+													<span>Edit the pattern</span>
+											   </button>
+									 </div>
+									 
+									 <div class="column">
+											
+												<h1 class="title is-size-4 is-spaced"> Please choose a color </h1>
+												<p>Remember a color is much easier to remember a password.</p>
+												<br>
+												
+												 <swatches v-model="color" inline></swatches>
+												
+									 </div>
+							</div>
+							<!-- columns -->					
+					</div>
+					<!-- box -->
+				</div>
+				<!-- container -->
+		</section>
+		
+		<section class="section" id="create-message">
+		<div class="container has-text-centered">
+			<div >
+			   <a class="button is-large is-primary is-outlined is-rounded" onclick="createHash(); return false;"> <span class="icon is-small"><i class="mdi mdi-content-copy"></i></span> &nbsp;  Backup my seed phrase</a>
+			</div>
+			<br>
+		</div>
+		</section>
+		
+		<section class="section" id="show-message">
+		<div class="container has-text-centered">
+			<div>
+				<a class="button is-large is-primary is-outlined is-rounded" onclick="decodeHash(); return false;"> <span class="icon is-small"><i class="mdi mdi-backup-restore"></i></span> &nbsp; Restore my seed phrase</a>
+			</div>	
+			<br>
+		 </div>
+		</section>
+	   <!-- offline -->
+	   </div>
+	  <div>
+	 </div>
+	<!-- app end -->
 	</div>
 				
-	<section class="section" id="create-message">
-    <div class="container has-text-centered">
-        <div >
-           <a class="button is-large is-primary is-outlined is-rounded" onclick="createHash(); return false;"> <span class="icon is-small"><i class="mdi mdi-content-copy"></i></span> &nbsp;  Backup my seed phrase</a>
-        </div>
-        <br>
-    </div>
-    </section>
-    
-    <section class="section" id="show-message">
-    <div class="container has-text-centered">
-		<div>
-			<a class="button is-large is-primary is-outlined is-rounded" onclick="decodeHash(); return false;"> <span class="icon is-small"><i class="mdi mdi-backup-restore"></i></span> &nbsp; Restore my seed phrase</a>
-		</div>	
-		<br>
-     </div>
-    </section>
+	
     
     <div id="modalresult" class="modal">
 	  <div class="modal-background"></div>
@@ -255,7 +289,7 @@
 			</p>
 		</div>
 	
-</footer>
+    </footer>
  
     <script src="js/vue/vue.min.js"></script>
     <!-- Individual components -->
@@ -268,8 +302,9 @@
     var lock;
     const dataLang = [{"id":"english","text":"English"},{"id":"spanish","text":"Spanish"},{"id":"french","text":"French"},{"id":"italian","text":"Italian"},{"id":"japan","text":"Japanese"},{"id":"korean","text":"Korean"},{"id":"chinese_simplified","text":"Chinese simplified"},{"id":"chinese_traditional","text":"Chinese traditional"}];
     var dataWords = [];
+    
     const Swatches = window.VueSwatches.default;
-   
+     
     const thispage = {
        components: { Swatches },  	
        data () {
