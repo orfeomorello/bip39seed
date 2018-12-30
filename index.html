@@ -30,7 +30,7 @@
     <meta name="twitter:image" content="https://www.bip39seed.com/img/bip-39-word-cloud.png">
 
     <link rel="stylesheet" href="css/buefy.min.css">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="css/patternlock.min.css">
     <link rel="stylesheet" href="css/vue-swatches.min.css">
    
@@ -54,9 +54,9 @@
       <nav class="navbar is-transparent">
 		<div class="container">
 			<div class="navbar-brand">
-				<a class="navbar-item" href="/">
+				<span class="navbar-item">
 					<img src="img/Binary-Man-Head.png" height="48">
-					</a>
+					</span>
 				</div>
 				<div class="navbar-menu" id="navMenu">
 					<div class="navbar-end">
@@ -196,22 +196,18 @@
 	<section class="section" id="create-message">
     <div class="container has-text-centered">
         <div >
-           <button type="button" class="button is-large is-primary" onclick="createHash()">Backup my seed phrase</button>
+           <a class="button is-large is-primary is-outlined is-rounded" onclick="createHash(); return false;"> <span class="icon is-small"><i class="mdi mdi-content-copy"></i></span> &nbsp;  Backup my seed phrase</a>
         </div>
+        <br>
     </div>
     </section>
     
     <section class="section" id="show-message">
     <div class="container has-text-centered">
 		<div>
-			<button type="button" class="button is-large is-primary" onclick="decodeHash()">Restore my seed phrase</button>
-		</div>
+			<a class="button is-large is-primary is-outlined is-rounded" onclick="decodeHash(); return false;"> <span class="icon is-small"><i class="mdi mdi-backup-restore"></i></span> &nbsp; Restore my seed phrase</a>
+		</div>	
 		<br>
-		<p> OR </p>
-		<br>
-		<div>
-			<button type="button" class="button is-large is-primary" onclick="document.location.href='/'">Create a new Backup</button>
-		</div>
      </div>
     </section>
     
